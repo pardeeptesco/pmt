@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PMT Client 1.0</title>
+    <script src="/eel.js"></script>
+    <style>
+      body {
+        font-size: 13px; /* Adjust font size */
+        background-color: #365555;
+        font-family: Arial, sans-serif;
+      }
+      .logo-section {
+        text-align: center;
+      }
+      .btn {
+        background-color: #00539f;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition-duration: 0.4s;
+        width: 30%;
+      }
+
+      .btn:hover {
+        background-color: #00529f82;
+      }
+
+      .disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .container {
+        width: 340px;
+        height: 60px;
+        background-color: #f2f2f2;
+        padding: 10px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .button {
+        background-color: #228b22;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 200px;
+        height: 200px;
+        overflow-y: scroll;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        display: none;
+        box-shadow: 10px 10px 5px rgb(147, 143, 199);
+        border-style: groove;
+      }
+
+      .popup label {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      .popup input[type="datetime-local"],
+      .popup select {
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+      }
+
+      .popup .button {
+        margin-top: 10px;
+      }
+
+      .detail {
+        width: 140;
+        margin-top: 20px;
+        background: #9faebc;
+        padding: 20px;
+        overflow-y: scroll;
+      }
+
+      .activity {
+        display: list-item;
+        background: #cce5ff;
+        color: rgb(38, 38, 102);
+        font-size: small;
+        margin: 5px;
+      }
+
+      .switch-container {
+        display: flex;
+        align-items: center; /* Align items vertically */
+        margin-bottom: 20px;
+        flex-direction: column;
+        padding-top: 20px;
+        width: 340px;
+      }
+
+      .switch {
+        left: 10px;
+        margin-right: 15px; /* Add some spacing between the header and the toggle slider */
+        position: relative;
+        display: inline-block;
+        width: 46px;
+        height: 20px;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 2px;
+        bottom: 2px;
+        background-color: white;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+      }
+
+      input:checked + .slider {
+        background-color: #2196f3;
+      }
+
+      input:focus + .slider {
+        box-shadow: 0 0 1px #2196f3;
+      }
+
+      input:checked + .slider:before {
+        -webkit-transform: translateX(27px);
+        -ms-transform: translateX(27px);
+        transform: translateX(27px);
+      }
+
+      /* Rounded sliders */
+      .slider.round {
+        border-radius: 20px;
+      }
+
+      .slider.round:before {
+        border-radius: 50%;
+      }
+
+      /* Styling for the mode label */
+
+      /* Styling for the timer */
+      #timer {
+        font-weight: bold;
+        color: white;
+        padding: 10px;
+        display: inline-block;
+        background-color: black;
+        margin-left: 10px; /* Add some spacing between mode label and timer */
+      }
+
+      /* Styling for the message */
+      #message {
+        font-weight: bold;
+        color: black;
+        padding: 10px;
+        display: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo {
+        max-width: 100%;
+        height: auto;
+      }
+      #planner {
+        font-weight: bold;
+        text-transform: uppercase;
+        color: rgb(19, 15, 15);
+        padding: 5px 10px;
+        display: inline-block;
+      }
+
+      label {
+        display: inline-block;
+        margin-top: 5px;
+      }
+
+      .form-row {
+        display: flex;
+      }
+
+      .form-group {
+        padding: 5px;
+        width: 50%;
+      }
+
+      .form-group input {
+        width: 100%;
+      }
+
+      /* styling for delete button */
+      .deleteButton {
+        color: #eee;
+        font-size: 0.27cm;
+        border: none;
+        border-radius: 1px;
+        background: #2c3e50;
+        width: 40px;
+        height: 20px;
+      }
+      .deleteButton:hover {
+        background: #c0392b;
+      }
+      .deleteButton:active {
+        background: #e74c3c;
+      }
+
+      .headingPopup {
+        background-color: #00539f;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .private-mode {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+      }
+
+      #modeLabel {
+        font-weight: bold;
+        text-transform: uppercase;
+        color: white;
+        padding: 5px 10px;
+        display: inline-block;
+        background-color: #00539f !important;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+        font-size: 15px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="logo-section">
+      <img src="logo.png" height="100px" width="100px" alt="Logo" class="logo" />
+    </div>
+    <div class="switch-container">
+      <div class="private-mode">
+        <label class="switch">
+          <input type="checkbox" id="toggle" onclick="toggleSlider()" />
+          <span class="slider round"></span>
+        </label>
+        <p id="modeLabel">Private Mode Off</p>
+      </div>
+      <div>
+        <p id="timer" style="display: none">00:00:00</p>
+        <p id="message"></p>
+      </div>
+    </div>
+
+    <!-- activity popup -->
+    <div class="container">
+      <span id="planner">Activity Planner</span>
+      <button class="btn" onclick="eel.launchaplanner()">Start</button>
+    </div>
+    <br/>
+    <div class="container">
+      <span id="planner">AHT Calculator</span>
+      <button class="btn" onclick="eel.launch_aht()">Start</button>
+    </div>
+
+    <div id="popup" class="popup">
+      <h2 class="headingPopup">Activity Planner</h2>
+      <form>
+        <div class="form-row">
+          <div class="form-group">
+            <input
+              placeholder="Start Date"
+              type="text"
+              id="startDate"
+              name="startDate"
+              onfocus="(this.type='date')"
+              onblur="(this.type='text')"
+              required
+            />
+
+            <input
+              placeholder="End Date"
+              type="text"
+              id="endDate"
+              name="endDate"
+              onfocus="(this.type='date')"
+              onblur="(this.type='text')"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <input
+              type="text"
+              id="startTime"
+              name="startTime"
+              placeholder="Start Time"
+              onfocus="(this.type='time')"
+              onblur="(this.type='text')"
+              required
+            />
+
+            <input
+              type="text"
+              id="endTime"
+              name="endTime"
+              placeholder="End Time"
+              onfocus="(this.type='time')"
+              onblur="(this.type='text')"
+              required
+            />
+          </div>
+        </div>
+
+        <label for="activities">Choose an activity:</label>
+        <select id="activities">
+          <option value="">Loading activities...</option>
+        </select>
+
+        <button type="submit" class="btn">Submit</button>
+        <button type="button" class="btn" onclick="closePopup()">Cancel</button>
+      </form>
+      <ol id="detail" class="container detail">
+        <strong> Activities</strong>
+      </ol>
+    </div>
+    <script>
+      var timerInterval;
+      var startTime;
+
+      function toggleSlider() {
+        var slider = document.getElementById("toggle");
+        var state = slider.checked;
+        var modeLabel = document.getElementById("modeLabel");
+        var timerLabel = document.getElementById("timer");
+        var message = document.getElementById("message");
+
+        // Set background color based on toggle state
+        if (state) {
+          // Private mode is on
+          modeLabel.style.backgroundColor = "#424242"; // Bright dark grey
+          modeLabel.innerText = "Private Mode On";
+
+          // Show the timer
+          timerLabel.style.display = "inline-block";
+
+          // Start the timer
+          startTime = Date.now();
+          updateTimer();
+          timerInterval = setInterval(updateTimer, 1000);
+        } else {
+          // Private mode is off
+          modeLabel.style.backgroundColor = "#228B22"; // Bright light green
+          modeLabel.innerText = "Private Mode Off";
+
+          // Stop the timer
+          clearInterval(timerInterval);
+
+          // Show the message after the timer has stopped and disappeared
+          setTimeout(function () {
+            var elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+            var hours = Math.floor(elapsedTime / 3600);
+            var minutes = Math.floor((elapsedTime % 3600) / 60);
+            var seconds = elapsedTime % 60;
+            message.innerText =
+              "You were in private mode for " +
+              pad(hours) +
+              ":" +
+              pad(minutes) +
+              ":" +
+              pad(seconds);
+            message.style.display = "inline-block";
+            message.style.backgroundColor = "#ffeb3b";
+            setTimeout(function () {
+              message.style.display = "none";
+              timerLabel.style.display = "none"; // Hide the timer
+            }, 5000);
+          }, 1000);
+        }
+
+        // Call Python function with the toggle state
+        eel.toggle_slider_state(state);
+      }
+
+      function updateTimer() {
+        var currentTime = Date.now();
+        var elapsedTime = Math.floor((currentTime - startTime) / 1000);
+        var hours = Math.floor(elapsedTime / 3600);
+        var minutes = Math.floor((elapsedTime % 3600) / 60);
+        var seconds = elapsedTime % 60;
+        document.getElementById("timer").innerText =
+          pad(hours) + ":" + pad(minutes) + ":" + pad(seconds);
+      }
+
+      function pad(value) {
+        return value < 10 ? "0" + value : value;
+      }
+      let tasks = [];
+      function openPopup() {
+        document.getElementById("popup").style.display = "block";
+
+        //Fetching activities from db
+
+        let activities = [
+          { id: 1, name: "activity 1" },
+          { id: 2, name: "activity 2" },
+          { id: 3, name: "activity 3" },
+        ];
+        var dropdown = document.getElementById("activities");
+
+        //Clear existing options
+        dropdown.innerHTML = '<option value="">Select activity...</option>';
+        // var db = openDatabase('trial.db');
+        activities.forEach(function (activity) {
+          console.log("gg");
+          var option = document.createElement("option");
+          option.value = activity.id; // Use activity ID as option value
+          option.text = activity.name; // Use activity name as option text
+          dropdown.appendChild(option);
+        });
+      }
+
+      function closePopup() {
+        document.getElementById("popup").style.display = "none";
+      }
+
+      document.querySelector("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const startDate = new Date(document.getElementById("startDate").value);
+        const endDate = new Date(document.getElementById("endDate").value);
+        const startTime = document.getElementById("startTime").value;
+
+        const endTime = document.getElementById("endTime").value;
+
+        const activity = document.getElementById("activities").value;
+        const today = new Date();
+        const detailContainer = document.getElementById("detail");
+
+        //setting time format
+        // const timeFormat =
+        //   today.toLocaleDateString() === startDateTime.toLocaleDateString()
+        //     ? "HH:mm:ss"
+        //     : "YYYY DD MM HH:mm:ss";
+
+        //pushing selected activity in list of activities
+
+        let task = {
+          id:Date.now(), //using timestamp as unique id
+          Activity: activity,
+          startDate: startDate,
+          endDate: endDate,
+          startTime: startTime,
+          endTime: endTime,
+        };
+        //inserting into db
+        tasks.push(task);
+
+        detailContainer.innerHTML = "Activites";
+
+        //listing all present activites
+        listActivities(tasks);
+
+        detailContainer.style.display = "block";
+
+        closePopup();
+      });
+
+    //   function formatDate(date, format) {
+    //     const months = [
+    //       "Jan",
+    //       "Feb",
+    //       "Mar",
+    //       "Apr",
+    //       "May",
+    //       "Jun",
+    //       "Jul",
+    //       "Aug",
+    //       "Sep",
+    //       "Oct",
+    //       "Nov",
+    //       "Dec",
+    //     ];
+
+    //     const pad = (num) => num.toString().padStart(2, "0");
+    //     const year = date.getFullYear();
+    //     const month = pad(months[date.getMonth()]);
+    //     const day = pad(date.getDate());
+    //     const hours = pad(date.getHours());
+    //     const minutes = pad(date.getMinutes());
+    //     const seconds = pad(date.getSeconds());
+
+    //     format = format.replace("YYYY", year);
+    //     format = format.replace("MM", month);
+    //     format = format.replace("DD", day);
+    //     format = format.replace("HH", hours);
+    //     format = format.replace("mm", minutes);
+    //     format = format.replace("ss", seconds);
+
+    //     return format;
+    //   }
+
+      //function to list all activities
+      function listActivities(tasks) {
+        const detailContainer = document.getElementById("detail");
+        detailContainer.innerHTML = "";
+        tasks.forEach(function (act) {
+          var activityToInsert = `
+           <li class="activity" id="${act.id}">
+            <p><strong>Activity:</strong>${act.Activity} &nbsp;&nbsp;<strong>Start:</strong> ${act.startTime} &nbsp;&nbsp;<strong>End:</strong> ${act.endTime} 
+                <button class="deleteButton" onclick="deleteActivity(${act.id})">Delete</button></p>
+            
+        </li>
+      `;
+          detailContainer.insertAdjacentHTML("beforeend", activityToInsert);
+        });
+      }
+
+      function deleteActivity(id){
+        var deleteButton=document.getElementById(id);
+        deleteButton.addEventListener('click',function(){
+            var index=tasks.findIndex(function(task){
+                 return task.id===id;
+            })
+            tasks.splice(index,1);
+            listActivities(tasks)
+        })
+      }
+
+    </script>
+  </body>
+</html>

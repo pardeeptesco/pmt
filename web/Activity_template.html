@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <title>Activity Planner</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="text/javascript" src="/eel.js"></script>
+  <style>
+  /* Styles for the table */
+
+#activityTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#activityTable th,
+#activityTable td {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Alternate row colors */
+#activityTable tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Responsive table styles */
+@media screen and (max-width: 600px) {
+  #activityTable {
+    overflow-x: auto;
+    display: block;
+    white-space: nowrap;
+  }
+
+  #activityTable th,
+  #activityTable td {
+    min-width: 100px;
+    max-width: 200px;
+    width: auto;
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+    font-size: 12px;
+  }
+
+  #activityTable th:nth-child(1),
+  #activityTable td:nth-child(1) {
+    width: auto; /* First column should be flexible */
+    min-width: auto;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div id = "popup" class="popup">
+    <h2 class="heading">Activity Planner</h2>
+    <form id="activityForm">
+      <div class="form-row">
+        <div class="form-group">
+          <input type="date" id="startDate" name="startDate" required>
+          <input type="date" id="endDate" name="endDate" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <input type="time" id="startTime" name="startTime" required>
+          <input type="time" id="endTime" name="endTime" required>
+        </div>
+      </div>
+      <label for="activities">Choose an activity:</label>
+      <select id="activities" required>
+        <option value="" disabled selected>Loading activities...</option>
+      </select>
+      <button type="submit" class="btn">Submit</button>
+      <button type="button" class="btn secondary" onclick="closePopup()">Cancel</button>
+    </form>
+    <ul id="activityList" class="activity-list">
+      <!-- <li class="activity empty">No activities yet</li> -->
+    </ul>
+     <!-- Table to display records -->
+     <table id="activityTable">
+      <thead>
+        <tr>
+          <th class="table_heading">Start Date</th>
+          <th class="table_heading">End Date</th>
+          <th class="table_heading">Start Time</th>
+          <th class="table_heading">End Time</th>
+          <th class="table_heading">Activity</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+      </tbody>
+    </table>
+  </div>
+  <script>
+    
+      function savePlannedActivities(startDate, endDate, startTime, endTime, activity) {
+        eel.saveActivityPlanned(startDate, endDate, startTime, endTime, activity);
+      }
+
+      document.getElementById('activityForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+  
+        // Get form values
+        var startDate = document.getElementById('startDate').value;
+        var endDate = document.getElementById('endDate').value;
+        var startTime = document.getElementById('startTime').value;
+        var endTime = document.getElementById('endTime').value;
+        var activity = document.getElementById('activities').value;
+  
+        // Log the values to the console (you can later replace this with API call)
+        console.log('Start Date:', startDate);
+        console.log('End Date:', endDate);
+        console.log('Start Time:', startTime);
+        console.log('End Time:', endTime);
+        console.log('Activity:', activity);
+        savePlannedActivities(startDate, endDate, startTime, endTime, activity);
+        eel.fetchActivityPlannerRecords()(populateTable);
+      });
+
+      function populateTable(records) {
+        var tableBody = document.getElementById('tableBody');
+        tableBody.innerHTML = ''; // Clear previous data
+  
+        records.forEach(function(record) {
+          var row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${record[1]}</td>
+            <td>${record[2]}</td>
+            <td>${record[3]}</td>
+            <td>${record[4]}</td>
+            <td>${record[5]}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+      }
+      eel.fetchActivityPlannerRecords()(populateTable);
+
+    </script>
+    <script src="./script.js"></script>
+   
+</body>
+</html>

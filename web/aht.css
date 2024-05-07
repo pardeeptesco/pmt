@@ -1,0 +1,129 @@
+body {
+    height: 100vh;
+    margin: 0;
+    background: #FFFFFF;
+    max-width: 550;
+}
+
+.btn {
+    background-color: #00539F;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition-duration: 0.4s;
+}
+
+.btn:hover {
+    background-color: #00529f82;
+
+}
+
+.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+.header > h1 {
+    color: white;
+    text-align: center;
+    background-color: #00539F;
+    border-bottom: 2px solid black;
+    font-size: 18px;
+}
+
+.logo {
+    padding-top: 25px;
+}
+.section-1 {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 20px;
+    padding: 0 20px;
+}
+.dropdown {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0px;
+    height: 26px;
+}
+.activity {
+    width: 100%;
+    font-size: 16px;
+}
+.action-section{
+    /* height: 100px; */
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.actionButtons {
+    display: flex;
+    flex-direction: column;
+
+}
+.volume-section{
+    text-align: center;
+    color: rgb(0, 83, 159);
+}
+
+.volume-section > label {
+    font-size: 18px;
+    font-weight: 600;
+}
+.inputVolume {
+    text-align: center;
+    height: 20px;
+    width: 80%;
+}
+.section-2 {
+    text-align: center;
+    padding: 0 5px;
+    margin: 0 20px;
+}
+.heading {
+    margin-top: 10px;
+    color: white;
+    text-align: center;
+    background-color: #00539F;
+    border: 2px solid black;
+    font-size: 16px;
+    height: 20px;
+    /* padding-top: 15px; */
+    font-weight: 600;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #dddddd;
+    margin-top: 20px;
+}
+
+.styled-table th, 
+.styled-table td {
+    padding: 5px;
+    text-align: left;
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table th {
+    background-color: #00294F;
+    color: white;
+}
+
+.styled-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.styled-table tbody tr:hover {
+    background-color: #ddd;
+}
+

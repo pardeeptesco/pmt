@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: hsl(230, 17%, 14%);
+  --bg-top: hsl(232, 19%, 15%);
+  --bg-card: hsl(228, 28%, 20%);
+
+  --text: hsl(228, 34%, 66%);
+  --text-secondary: hsl(0, 0%, 100%);
+
+  --input-bg: linear-gradient(to right, hsl(210, 78%, 56%), hsl(146, 68%, 55%));
+
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+
+  --border-top-card: hsl(228, 34%, 66%);
+
+  --lime-green: hsl(163, 72%, 41%);
+  --bright-red: hsl(356, 69%, 56%);
+
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+}
+
+.light {
+  --bg: hsl(0, 0%, 100%);
+  --bg-top: hsl(225, 100%, 98%);
+  --bg-card: hsl(227, 47%, 96%);
+
+  --input-bg: hsl(230, 22%, 74%);
+
+  --text: hsl(228, 12%, 44%);
+  --text-secondary: hsl(230, 17%, 14%);
+}
+
+.facebook {
+  --border-top-card: hsl(195, 100%, 50%);
+}
+
+.twitter {
+  --border-top-card: hsl(203, 89%, 53%);
+}
+
+.youtube {
+  --border-top-card: hsl(348, 97%, 39%);
+}
+
+.instagram {
+  --border-top-card: linear-gradient(
+    to right,
+    hsl(37, 97%, 70%),
+    hsl(329, 70%, 58%)
+  );
+}
+
+.positive {
+  color: var(--lime-green);
+}
+
+.negative {
+  color: var(--bright-red);
+}
+
+html,
+body,
+header,
+main,
+.followers,
+.followers-card,
+.followers-card_border {
+  width: 100%;
+}
+
+html,
+body,
+.toggle-container,
+.followers,
+.followers-card,
+.followers-card_user,
+.fallowers-today-number,
+.overview-today_card_header,
+.overview-today,
+.overview-today_card_main {
+  display: flex;
+}
+
+html,
+body,
+.toggle-container,
+.followers-card,
+.fallowers-today-number,
+.overview-today_card_header {
+  align-items: center;
+}
+
+html,
+body,
+.followers-card {
+  flex-direction: column;
+}
+
+html,
+body {
+  min-height: 100vh;
+  background-color: var(--bg);
+}
+
+body {
+  padding: 2rem;
+}
+
+h1,
+h2,
+.followers-number_value,
+.overview-today_card_main_number {
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-bold);
+}
+
+h1 {
+  font-size: 1.7rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+p,
+label {
+  color: var(--text);
+  font-weight: var(--font-weight-bold);
+}
+
+main,
+header {
+  max-width: 1200px;
+}
+
+header {
+  margin-bottom: 3rem;
+}
+
+main {
+  margin: 1.5rem;
+}
+
+.title-container {
+  padding-bottom: 2rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--bg-card);
+}
+
+.toggle-container,
+.overview-today_card_header,
+.overview-today_card_main {
+  justify-content: space-between;
+}
+
+.toggle-container {
+  gap: 12px;
+}
+
+#dark {
+  appearance: none;
+  position: relative;
+  padding: 2.5px;
+
+  width: 50px;
+  height: 25px;
+
+  background: var(--input-bg);
+  border-radius: 1000px;
+  transition: 0.3s ease-in-out;
+}
+
+#dark::before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: var(--bg-card);
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+#dark:checked::before {
+  transform: translateX(25px);
+}
+
+.followers {
+  margin-bottom: 2rem;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.followers-card {
+  padding: 2rem;
+
+  background-color: var(--bg-card);
+  border-radius: 6px;
+
+  flex: 1 1 282px;
+  gap: 1rem;
+
+  overflow: hidden;
+  position: relative;
+
+  animation-name: start;
+  animation-duration: 1s;
+}
+
+.followers-card_border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 6px;
+  background: var(--border-top-card);
+}
+
+.followers-card_user {
+  gap: 8px;
+}
+
+.followers-number {
+  text-align: center;
+}
+
+.followers-number_text {
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
+}
+
+.fallowers-today-number {
+  gap: 6px;
+}
+
+.followers-number_value {
+  font-size: 5rem;
+}
+
+.followers-today-number_text {
+  font-weight: var(--font-weight-bold);
+}
+
+.overview-today {
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.overview-today_card {
+  padding: 2rem;
+  background-color: var(--bg-card);
+  border-radius: 5px;
+  flex: 1 1 282px;
+  animation-name: start;
+  animation-duration: 1s;
+}
+
+.overview-today_card_header {
+  padding-bottom: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.overview-today_card_main_number {
+  font-size: 2.5rem;
+}
+
+.overview-today_card_main {
+  align-items: flex-end;
+}
+
+@media (min-width: 875px) {
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .title-container {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+@keyframes start {
+  from {
+    transform: translate(50%);
+  }
+}
+
+    </style>
+    <script type="text/javascript" src="/eel.js"></script>
+
+
+</head>
+<body>
+    <header>
+        <div class="title-container">
+          <h1>PMT Local Dashboard</h1>
+          <p>Today</p>
+        </div>
+        <div class="toggle-container">
+          <label for="dark">Dark Mode</label>
+          <input type="checkbox" id="dark">
+        </div>
+      </header>
+      
+      <main>
+        <section class="followers">
+          <div class="followers-card">
+            <div class="followers-card_border facebook"></div>
+            <div class="followers-card_user">
+              <!-- <img src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-facebook.svg" alt=""> -->
+              <!-- <p>1</p> -->
+            </div>
+            <div class="followers-number">
+              <span id="hours_worked_today" class="followers-number_value">43</span>
+              <p class="followers-number_text">Hours Worked</p>
+            </div>
+            <div class="fallowers-today-number positive">
+            <!-- <img src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-up.svg" alt=""> -->
+              <span class="followers-today-number_text">Today</span>
+            </div>
+          </div>
+      
+          <div class="followers-card">
+            <div class="followers-card_border twitter"></div>
+            <div class="followers-card_user">
+              <!-- <img src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-twitter.svg" alt=""> -->
+              <!-- <p>@nathanf</p> -->
+            </div>
+            <div class="followers-number">
+              <span id="break_hours_today" class="followers-number_value">4</span>
+              <p class="followers-number_text">Break Hours</p>
+            </div>
+            <div class="fallowers-today-number positive">
+              <!-- <img src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-up.svg" alt=""> -->
+              <span class="followers-today-number_text">Today</span>
+            </div>
+          </div>
+      
+          <div class="followers-card">
+            <div class="followers-card_border instagram"></div>
+            <div class="followers-card_user">
+              <!-- <img src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-instagram.svg" alt=""> -->
+              <!-- <p>@nathanf</p> -->
+            </div>
+            <div class="followers-number">
+              <span id = "activities_count_today" class="followers-number_value">23</span>
+              <p class="followers-number_text">Number of planned Activities today</p>
+            </div>
+            <div class="fallowers-today-number positive">
+              <!-- <img src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-up.svg" alt=""> -->
+              <span class="followers-today-number_text">Today</span>
+            </div>
+          </div>
+      
+          <div class="followers-card">
+            <div class="followers-card_border youtube"></div>
+            <div class="followers-card_user">
+              <!-- <img src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-youtube.svg" alt=""> -->
+              <!-- <p>@nathanf</p> -->
+            </div>
+            <div class="followers-number">
+              <span id="today_volume_today" class="followers-number_value">14</span>
+              <p class="followers-number_text">Volume</p>
+            </div>
+            <div class="fallowers-today-number positive">
+              <!-- <img src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-down.svg" alt=""> -->
+              <span class="followers-today-number_text">Today</span>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2>Week-Overview</h2>
+      
+          <div class="overview-today">
+      
+            <div class="overview-today_card">
+              <div class="overview-today_card_header">
+                <p class="overview-today_card_header_title"></p>
+                <!-- <img class="overview-today_card_header_logo" src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-facebook.svg" alt=""> -->
+              </div>
+              <div class="overview-today_card_main">
+                <!-- <span class="overview-today_card_main_number">87</span> -->
+                <div class="fallowers-today-number positive">
+                  <!-- <img src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-up.svg" alt=""> -->
+                  <!-- <span class="followers-today-number_text">3%</span> -->
+                </div>
+              </div>
+            </div>
+      
+            <div class="overview-today_card">
+              <div class="overview-today_card_header">
+                <p class="overview-today_card_header_title"></p>
+                <!-- <img class="overview-today_card_header_logo" src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-facebook.svg" alt=""> -->
+              </div>
+              <div class="overview-today_card_main">
+                <span class="overview-today_card_main_number"></span>
+                <div class="fallowers-today-number negative">
+                  <!-- <img src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-down.svg" alt=""> -->
+                  <span class="followers-today-number_text"></span>
+                </div>
+              </div>
+            </div>
+      
+            <div class="overview-today_card">
+              <div class="overview-today_card_header">
+                <p class="overview-today_card_header_title"></p>
+                <!-- <img class="overview-today_card_header_logo" src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-instagram.svg" alt=""> -->
+              </div>
+              <div class="overview-today_card_main">
+                <span class="overview-today_card_main_number"></span>
+                <div class="fallowers-today-number positive">
+                  <!-- <img src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-up.svg" alt="">
+                  <span class="followers-today-number_text">2257%</span> -->
+                </div>
+              </div>
+            </div>
+      
+            <div class="overview-today_card">
+              <div class="overview-today_card_header">
+                <p class="overview-today_card_header_title"></p>
+                <!-- <img class="overview-today_card_header_logo" src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-instagram.svg" alt=""> -->
+              </div>
+              <div class="overview-today_card_main">
+                <span class="overview-today_card_main_number"></span>
+                <div class="fallowers-today-number positive">
+                  <!-- <img src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-up.svg" alt="">
+                  <span class="followers-today-number_text">1375%</span> -->
+                </div>
+              </div>
+            </div>
+      
+            <div class="overview-today_card">
+              <div class="overview-today_card_header">
+                <p class="overview-today_card_header_title"></p>
+                <!-- <img class="overview-today_card_header_logo" src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-twitter.svg" alt=""> -->
+              </div>
+              <div class="overview-today_card_main">
+                <span class="overview-today_card_main_number"></span>
+                <div class="fallowers-today-number positive">
+                  <!-- <img src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-up.svg" alt="">
+                  <span class="followers-today-number_text">303%</span> -->
+                </div>
+              </div>
+            </div>
+      
+            <div class="overview-today_card">
+              <div class="overview-today_card_header">
+                <p class="overview-today_card_header_title"></p>
+                <!-- <img class="overview-today_card_header_logo" src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-twitter.svg" alt=""> -->
+              </div>
+              <div class="overview-today_card_main">
+                <span class="overview-today_card_main_number"></span>
+                <div class="fallowers-today-number positive">
+                  <!-- <img src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-up.svg" alt="">
+                  <span class="followers-today-number_text">553%</span> -->
+                </div>
+              </div>
+            </div>
+      
+            <div class="overview-today_card">
+              <div class="overview-today_card_header">
+                <p class="overview-today_card_header_title"></p>
+                <!-- <img class="overview-today_card_header_logo" src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-youtube.svg" alt=""> -->
+              </div>
+              <div class="overview-today_card_main">
+                <span class="overview-today_card_main_number"></span>
+                <div class="fallowers-today-number negative">
+                  <!-- <img src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-down.svg" alt="">
+                  <span class="followers-today-number_text">19%</span> -->
+                </div>
+              </div>
+            </div>
+      
+            <div class="overview-today_card">
+              <div class="overview-today_card_header">
+                <p class="overview-today_card_header_title"></p>
+                <!-- <img class="overview-today_card_header_logo" src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-youtube.svg" alt=""> -->
+              </div>
+              <div class="overview-today_card_main">
+                <span class="overview-today_card_main_number"></span>
+                <div class="fallowers-today-number negative">
+                  <!-- <img src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Social%20media%20dashboard/images/icon-down.svg" alt="">
+                  <span class="followers-today-number_text">12%</span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+      
+        </section>
+      </main>
+<script>
+  async function getTotalHours() {
+    const dashboardData = await eel.dashboardData()();
+    let hours_worked_today = document.getElementById("hours_worked_today");
+    hours_worked_today && (hours_worked_today.textContent = dashboardData.total_hours);
+
+    let today_volume_today = document.getElementById("today_volume_today");
+    today_volume_today && (today_volume_today.textContent = dashboardData.volume);
+
+    let break_hours_today = document.getElementById("break_hours_today");
+    break_hours_today && (break_hours_today.textContent = dashboardData.break_hours);
+
+    let activities_count_today = document.getElementById("activities_count_today");
+    activities_count_today && (activities_count_today.textContent = dashboardData.activities_count);
+
+    console.log("Dashboard Data: ", dashboardData)
+  }
+  getTotalHours()// load database data
+function setThemeLocalStorage(theme) {
+  localStorage.setItem("theme", theme);
+}
+
+function getThemeLocalStorage() {
+  return localStorage.getItem("theme");
+}
+
+function setTheme(theme) {
+  setThemeLocalStorage(theme);
+  document.body.className = theme;
+}
+
+function setToggleInput(theme) {
+  const toggleInput = document.getElementById("dark");
+  toggleInput.checked = theme === "dark";
+}
+
+function loadTheme() {
+  const theme = getThemeLocalStorage();
+  if (theme) {
+    setTheme(theme);
+    setToggleInput(theme);
+  } else {
+    setTheme("dark");
+    setToggleInput("dark");
+  }
+}
+
+function toggleTheme(event) {
+  const theme = event.target.checked ? "dark" : "light";
+  setTheme(theme);
+}
+
+window.addEventListener("load", loadTheme);
+document.getElementById("dark").addEventListener("change", toggleTheme);
+
+      </script>
+</body>
+</html>

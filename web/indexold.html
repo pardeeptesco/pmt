@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PMT Client 1.0</title>
+    <script src="/eel.js"></script>
+    <style>
+        body {
+            font-size: 13px; /* Adjust font size */
+            background-color: #F5FFFA;
+        }
+
+        .switch-container {
+            display: flex;
+            align-items: center; /* Align items vertically */
+        }
+
+        .switch {
+            left: 10px;
+            margin-right: 15px; /* Add some spacing between the header and the toggle slider */
+            position: relative;
+            display: inline-block;
+            width: 46px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(27px);
+            -ms-transform: translateX(27px);
+            transform: translateX(27px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 20px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        /* Styling for the mode label */
+        #modeLabel {
+            font-weight: bold;
+            text-transform: uppercase;
+            color: white;
+            padding: 5px 10px;
+            display: inline-block;
+        }
+
+        /* Styling for the timer */
+        #timer {
+            font-weight: bold;
+            color: white;
+            padding: 5px 10px;
+            display: inline-block;
+            background-color: black;
+            margin-left: 10px; /* Add some spacing between mode label and timer */
+        }
+
+        /* Styling for the message */
+        #message {
+            font-weight: bold;
+            color: black;
+            padding: 5px 10px;
+            background-color: #FFEB3B; /* Yellow */
+            display: none;
+        }
+
+        .logo {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="logo.png" alt="Logo" class="logo">
+    <div class="switch-container">
+        <label class="switch">
+            <input type="checkbox" id="toggle" onclick="toggleSlider()">
+            <span class="slider round"></span>
+        </label>
+        <p id="modeLabel" style="background-color: #228B22;">Private Mode Off</p>
+        <p id="timer" style="display: none;">00:00:00</p>
+        <p id="message"></p>
+    </div>
+    <script>
+        var timerInterval;
+        var startTime;
+        
+        function toggleSlider() {
+            var slider = document.getElementById("toggle");
+            var state = slider.checked;
+            var modeLabel = document.getElementById("modeLabel");
+            var timerLabel = document.getElementById("timer");
+            var message = document.getElementById("message");
+
+            // Set background color based on toggle state
+            if (state) {
+                // Private mode is on
+                modeLabel.style.backgroundColor = '#424242'; // Bright dark grey
+                modeLabel.innerText = "Private Mode On";
+                //eel.toggle_slider_state(state);
+                //eel.cp('Private Mode On')
+                // Show the timer
+                timerLabel.style.display = "inline-block";
+
+                // Start the timer
+                startTime = Date.now();
+                updateTimer();
+                timerInterval = setInterval(updateTimer, 1000);
+            } else {
+                // Private mode is off
+                modeLabel.style.backgroundColor = '#228B22'; // Bright light green
+                modeLabel.innerText = "Private Mode Off";
+                //eel.toggle_slider_state(state);
+                //eel.cp('Private Mode Off')
+
+                // Stop the timer
+                clearInterval(timerInterval);
+                
+                // Show the message after the timer has stopped and disappeared
+                setTimeout(function() {
+                    var elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+                    var hours = Math.floor(elapsedTime / 3600);
+                    var minutes = Math.floor((elapsedTime % 3600) / 60);
+                    var seconds = elapsedTime % 60;
+                    message.innerText = "You were in private mode for " + pad(hours) + ":" + pad(minutes) + ":" + pad(seconds);
+                    message.style.display = "inline-block";
+                    
+                    setTimeout(function() {
+                        message.style.display = "none";
+                        timerLabel.style.display = "none"; // Hide the timer
+                    }, 5000);
+                }, 1000);
+            }
+
+            // Call Python function with the toggle state
+            eel.toggle_slider_state(state);
+
+        }
+
+        function updateTimer() {
+            var currentTime = Date.now();
+            var elapsedTime = Math.floor((currentTime - startTime) / 1000);
+            var hours = Math.floor(elapsedTime / 3600);
+            var minutes = Math.floor((elapsedTime % 3600) / 60);
+            var seconds = elapsedTime % 60;
+            document.getElementById("timer").innerText = pad(hours) + ":" + pad(minutes) + ":" + pad(seconds);
+        }
+
+        function pad(value) {
+            return value < 10 ? "0" + value : value;
+        }
+    </script>
+</body>
+</html>

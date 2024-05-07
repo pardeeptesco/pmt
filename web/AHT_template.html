@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AHT Calculator Tesco</title>
+    <link rel="stylesheet" href="aht.css" />
+    <script type="text/javascript" src="/eel.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <h1>AHT Calculator</h1>
+    </div>
+    <div class="section-1">
+      <div class="logo">
+        <img height="100px" width="150px" alt="Intelligent Hub Logo" src="./logo.png">
+      </div>
+      <div>
+        <div class="dropdown">
+          <select class="activity" id="activity">
+            <option value="" selected disabled>Select Activity from the dropdown</option>
+ 
+          </select>
+        </div>
+        <div class="action-section">
+          <div class="actionButtons">
+            <button class="start btn" onclick="start()">Start</button>
+            <button class="pause btn" onclick="pauseActivity()" >Pause</button>
+          </div>
+          <div class="volume-section">
+            <label>Enter Volume Processed</label>
+            <input type="number" min="1" max="999" placeholder="Enter Volume..." class="inputVolume" id="inputVolume" />
+            <button class="end btn" onclick="stopActivity()">End & Submit</button>
+        </div>
+        </div>       
+      </div>
+    </div>
+
+    <div class="section-2">
+        <div class="heading">
+            Active Calculations
+        </div>
+        <div class="activityTable">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Activity Name</th>
+                        <th>Start Time</th>
+                        <th>Break Point</th>
+                        <th>End Time</th>
+                        <th>Total Time</th>
+                        <th>Pause</th>
+                        <th>Volume</th>
+                    </tr>
+                </thead>
+                <tbody id="activeActivities">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="./aht.js"></script>
+
+  </body>
+</html>

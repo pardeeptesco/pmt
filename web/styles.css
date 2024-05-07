@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5fffa;
+  }
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .form-group > input {
+    width: 93% !important;
+  }
+  .heading {
+    color: #00539F;
+    margin-top: 0;
+  }
+  
+  .form-row {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  .form-group {
+    flex: 1;
+  }
+  
+  input[type="date"],
+  input[type="time"],
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  
+.btn {
+  background-color: #00539F;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition-duration: 0.4s;
+}
+
+.btn:hover {
+  background-color: #00529f82;
+
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+  .btn.secondary {
+    background-color: #ccc;
+    color: #333;
+  } 
+  
+  .activity-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .activity {
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .empty {
+    text-align: center;
+  }
+  
