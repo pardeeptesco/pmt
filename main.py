@@ -146,8 +146,6 @@ def launchMainApp():
     eel.show("index.html")
 
 def backgroundApp():
-    # eel.start('test.html', mode='default', size=(1, 1))
-    # eel.start('index.html', mode='chrome', size=(370, 500), position=(100, 100), callback=on_quit)
     eel.start('index.html',disable_cache=True, mode="chrome", size=(370, 500), position=(100, 100), callback=on_quit)
 
 
