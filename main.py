@@ -167,10 +167,12 @@ if __name__ == "__main__":
     # Create a system tray icon
     icon = Icon("Python Eel Tray App", icon_image, menu=Menu
                 (
-                    MenuItem('PMT Launch', launchMainApp),
-                    MenuItem('Dashboard', launch_dashboard), 
+                    MenuItem('PMT CLIENT', launchMainApp),
+                    MenuItem('DASHBOARD', launch_dashboard), 
                     MenuItem("Help", open_help),
-                    MenuItem('Exit', quit_callback)))
+                    MenuItem("MULTI-ROLE", open_help),
+                    MenuItem('Exit', quit_callback)
+                    ))
 
     # Start the icon in a separate thread
     threading.Thread(target=icon.run).start()
