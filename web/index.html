@@ -260,7 +260,7 @@
         width: 100%;
         display: flex;
         align-items: center;
-        justify-content: space-around;
+        justify-content: space-between;
       }
 
       #modeLabel {
@@ -284,20 +284,21 @@
     <div class="logo-section">
       <img src="logo.png" height="100px" width="100px" alt="Logo" class="logo" />
     </div>
-    <div class="switch-container">
-      <div class="private-mode">
-        <label class="switch">
-          <input type="checkbox" id="toggle" onclick="toggleSlider()" />
-          <span class="slider round"></span>
-        </label>
-        <p id="modeLabel">Private Mode Off</p>
+    
+<br/>
+    <div class="container">
+        <div class="private-mode">
+         
+          <p id="modeLabel">Private Mode Off</p>
+          <label class="switch">
+            <input type="checkbox" id="toggle" onclick="toggleSlider()" />
+            <span class="slider round"></span>
+          </label>
+        </div>
+       
       </div>
-      <div>
-        <p id="timer" style="display: none">00:00:00</p>
-        <p id="message"></p>
-      </div>
-    </div>
-
+    <br/>
+  
     <!-- activity popup -->
     <div class="container">
       <span id="planner">Activity Planner</span>
@@ -307,6 +308,12 @@
     <div class="container">
       <span id="planner">AHT Calculator</span>
       <button class="btn" onclick="eel.launch_aht()">Start</button>
+    </div>
+    <br/>
+    <div style="text-align: center;">
+      <span id="timer" style="display: none">00:00:00</span>
+      <p id="message"></p>
+    </span>
     </div>
 
     <div id="popup" class="popup">

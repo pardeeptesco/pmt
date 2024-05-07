@@ -167,10 +167,10 @@ if __name__ == "__main__":
     # Create a system tray icon
     icon = Icon("Python Eel Tray App", icon_image, menu=Menu
                 (
-                    MenuItem('PMT CLIENT', launchMainApp),
+                    # MenuItem('PMT CLIENT', launchMainApp),
                     MenuItem('DASHBOARD', launch_dashboard), 
-                    MenuItem("Help", open_help),
                     MenuItem("MULTI-ROLE", open_help),
+                    MenuItem("Help", open_help),
                     MenuItem('Exit', quit_callback)
                     ))
 
